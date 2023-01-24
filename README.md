@@ -4,9 +4,9 @@ To use it just:
 
 1. Deploy to Azure with this button:
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMaPaSoTo%2Fnode-red-webapp%2Fmaster%2Fwebapp.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMaPaSoTo%2Fnode-red-webapp%2Fmain%2Fwebapp.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
 
-Or...
+Or... 
 
 1. Create an Azure Web App
 1. Open the settings and activate **Web sockets**
