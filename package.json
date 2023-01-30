@@ -7,7 +7,7 @@
     "node-red": "^3.0.2",
     "node-red-contrib-azureiotc2d": "0.0.9",
     "node-red-contrib-azureiothubnode": "^0.5.3",
-    "node-red-dashboard": "^2.21.0"
+    "node-red-dashboard": "^3.2.0"
   },
   "devDependencies": {},
   "scripts": {
