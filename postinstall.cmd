@@ -9,5 +9,5 @@ npm install node-red-dashboard node-red-contrib-azure-iot-central node-red-contr
      popd 
      copy npm_.cmd npm.cmd /y
 )
-pushd \home\nodered\.node-red
+popd
 copy flow.json \home\nodered\.node-red\flows.json
