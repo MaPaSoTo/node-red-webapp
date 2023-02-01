@@ -2,12 +2,11 @@
 (if not exist \home\nodered mkdir \home\nodered)
 (if not exist \home\nodered\.node-red mkdir \home\nodered\.node-red)
 copy npm_.cmd \home\nodered\.node-red\npm_.cmd
+copy flow.json \home\nodered\.node-red\flow.json
 pushd \home\nodered\.node-red
-copy flow.json \home\nodered\.node-red\flows.json
 npm install node-red-dashboard node-red-contrib-azure-iot-central node-red-contrib-azure-iot-device node-red-node-random ttb-node-red-counter & (
      copy npm_.cmd npm.cmd /y
+     copy flow.json flows.json /y
      popd 
      copy npm_.cmd npm.cmd /y
 )
-popd
-copy flow.json \home\nodered\.node-red\flows.json
