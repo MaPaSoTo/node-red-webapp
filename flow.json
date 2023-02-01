@@ -1,15 +1,8 @@
 [
     {
-        "id": "606fe2de.71638c",
-        "type": "tab",
-        "label": "Demo - Machine 2",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "149e711e.cb452f",
+        "id": "cb08258f.0af9e8",
         "type": "inject",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "",
         "props": [
             {
@@ -20,28 +13,28 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "45",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 220,
-        "y": 140,
+        "x": 150,
+        "y": 100,
         "wires": [
             [
-                "e6c1ace4.8e332",
-                "a81acf4.4e9ec3"
+                "a45a8b2b.7fbca8",
+                "270eca5f.0f3c46"
             ]
         ]
     },
     {
-        "id": "5472199e.72df28",
+        "id": "618bf86a.370678",
         "type": "debug",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -49,161 +42,61 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1290,
+        "x": 810,
         "y": 300,
         "wires": []
     },
     {
-        "id": "76d06a6d.0174a4",
+        "id": "bb6a5cc.40070a",
         "type": "function",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "telemetry",
-        "func": "//Get time difference between desired property and actual time in hours difference\nconst start = new Date(flow.get(\"TimeOfInitialCommissioning\"));\nconst end = new Date().getTime();\nconst diff = end - start;\n//const seconds = Math.floor(diff / 1000 % 60);\nconst seconds = Math.floor(diff / 1000 /60);\nconst hours_diff = Math.round(seconds / 60);\n\n\n//if working mode = 1 \n//flow.set('temp_escalation',msg.Temperature);\n//flow.set('power_escalation',msg.PowerConsumption);\n//    node.warn (\"Data\")\n//    node.warn ('1. flow.get(\"temp_escalation\") ' + flow.get(\"temp_escalation\") +' ');\n//    node.warn ('2. flow.get(\"MaxTempForShutdown\") ' + flow.get(\"MaxTempForShutdown\") +' ');\n//    node.warn ('3. flow.get(\"power_escalation\") ' + flow.get(\"power_escalation\") +' ');\n//    node.warn ('4. flow.get(\"MaxPowerConsumptionForShutdown\") ' + flow.get(\"MaxPowerConsumptionForShutdown\") +' ');\n    \n    \nconst temp_escalation = flow.get(\"temp_escalation\");\nconst power_escalation = flow.get(\"power_escalation\");\nconst power_shutdown = flow.get(\"MaxPowerConsumptionForShutdown\");\nconst temp_shutdown = flow.get(\"MaxTempForShutdown\");\n\nif ((temp_escalation <= temp_shutdown)){\n//if (('flow.get(\"temp_escalation\")' < 'flow.get(\"MaxTempForShutdown\")')||('flow.get(\"power_escalation\")' < 'flow.get(\"MaxPowerConsumptionForShutdown\")')){\n    flow.get(\"WorkingModePayload\")\n    flow.set(\"WorkingModePayload\",0)\n//    node.warn (\"Shutdown reached\")\n//    node.warn ('1. flow.get(\"temp_escalation\") ' + flow.get(\"temp_escalation\") +' ');\n//    node.warn ('2. flow.get(\"MaxTempForShutdown\") ' + flow.get(\"MaxTempForShutdown\") +' ');\n//    node.warn ('3. flow.get(\"power_escalation\") ' + flow.get(\"power_escalation\") +' ');\n//    node.warn ('4. flow.get(\"MaxPowerConsumptionForShutdown\") ' + flow.get(\"MaxPowerConsumptionForShutdown\") +' ');\n//    node.warn ('5. flow.get(\"WorkingModePayload\") ' + flow.get(\"WorkingModePayload\") +' ');\n} \n\n\nif (flow.get(\"WorkingModePayload\") == 0){\nnode.warn(\"Sending Data - No Escalation\");\nflow.set('temp_escalation',msg.Temperature);\nflow.set('power_escalation',msg.PowerConsumption);\n//node.warn ('1. msg.Temperature ' + msg.Temperature +' ');\nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': Temperature,\n        'PowerConsumption': msg.PowerConsumption,\n        'OperatingHours': hours_diff\n    }\n}\n//node.warn ('2. msg.Temperature ' + msg.Temperature +' ');\n//flow.set('temp_escalation',msg.Temperature);\n//flow.set('power_escalation',msg.PowerConsumption);\n\n} else {\n    node.warn(\"Sending Data - Escalation\");\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));   \nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': flow.get(\"temp_escalation\"),\n        'PowerConsumption': flow.get(\"power_escalation\"),\n        'OperatingHours': hours_diff\n    }\n}\n\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));\n\n\n}\n\n\nreturn msg;",
+        "func": "//Get time difference between desired property and actual time in hours difference\nconst start = new Date(flow.get(\"TimeOfInitialCommissioning\"));\nconst end = new Date().getTime();\nconst diff = end - start;\n//const seconds = Math.floor(diff / 1000 % 60);\nconst seconds = Math.floor(diff / 1000 /60);\nconst hours_diff = Math.round(seconds / 60);\nvar temp_escalation = flow.get(\"temp_escalation\");\nvar power_escalation = flow.get(\"power_escalation\");\nconst power_shutdown = flow.get(\"MaxPowerConsumptionForShutdown\");\nconst temp_shutdown = flow.get(\"MaxTempForShutdown\");\nvar Temperature = flow.get(\"Temperature\");\nvar PowerConsumption = flow.get(\"PowerConsumption\");\n\nif ((temp_escalation <= temp_shutdown)){\n\n    flow.get(\"WorkingModePayload\")\n    flow.set(\"WorkingModePayload\",0)\n} \n\n\nif (flow.get(\"WorkingModePayload\") == 0){\nnode.warn(\"Sending Data - No Escalation\");\nflow.set('temp_escalation',msg.Temperature);\nflow.set('power_escalation',msg.PowerConsumption);\nnode.warn ('1. msg.Temperature ' + msg.Temperature +' ');\nnode.warn ('1. msg.CycleTime ' + msg.CycleTime +' ');\nnode.warn ('1. msg.PowerConsumption ' + msg.PowerConsumption +' ');\nnode.warn ('1. msg.OperatingHours ' + hours_diff +' ');\nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': msg.Temperature,\n        'PowerConsumption': msg.PowerConsumption,\n        'OperatingHours': hours_diff\n    }\n}\n} else {\n    node.warn(\"Sending Data - Escalation\");\n    flow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\n    flow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));   \n    node.warn ('2. msg.Temperature (temp_escalation) ' + temp_escalation +' ');\n    node.warn ('2. msg.CycleTime ' + msg.CycleTime +' ');\n    node.warn ('2. msg.PowerConsumption ' + power_escalation +' ');\n    node.warn ('2. msg.OperatingHours ' + hours_diff +' ');\n    msg = {\n        'topic': 'telemetry',\n        'payload': {\n            'CycleTime': msg.CycleTime,\n            'Temperature': flow.get(\"temp_escalation\"),\n            'PowerConsumption': flow.get(\"power_escalation\"),\n            'OperatingHours': hours_diff\n        }\n}\n\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));\n\n\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
-        "y": 220,
+        "x": 600,
+        "y": 180,
         "wires": [
             [
-                "309d6620.388dba"
+                "e1d2a3d6.b4ac3",
+                "e133fa46.900198"
             ]
         ]
     },
     {
-        "id": "681d8a96.17b2c4",
-        "type": "inject",
-        "z": "606fe2de.71638c",
-        "name": "Trigger telemetry",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 430,
-        "y": 1520,
+        "id": "e133fa46.900198",
+        "type": "Azure IoT Central",
+        "z": "922c9cdb.45706",
+        "scopeid": "0ne002783A6",
+        "deviceid": "machine1",
+        "primarykey": "yoONN0Z6KWIVakKIJ9iOYjecyKxyJcYPj49hRWlFylA=",
+        "command1": "WorkingMode",
+        "command2": "WorkingMode2",
+        "command3": "",
+        "command4": "",
+        "command5": "",
+        "transport": "mqtt",
+        "auth": "sas",
+        "certfile": "",
+        "certkeyfile": "",
+        "passwordi": "",
+        "x": 810,
+        "y": 240,
         "wires": [
             [
-                "9809f50d.f02b18"
+                "618bf86a.370678"
             ]
         ]
     },
     {
-        "id": "9809f50d.f02b18",
-        "type": "function",
-        "z": "606fe2de.71638c",
-        "name": "telemetry",
-        "func": "msg = {\n    'topic': 'telemetry',\n    'payload': {'humidity': Math.round(10000*Math.random())/100,\n        'temperature': 20 + (Math.round(2500*Math.random())/100),\n        'pressure': 850 + (Math.round(35000*Math.random())/100)\n    }\n}\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 720,
-        "y": 1520,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b462a689.38dfc8",
-        "type": "inject",
-        "z": "606fe2de.71638c",
-        "name": "Trigger reported properties",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 410,
-        "y": 1600,
-        "wires": [
-            [
-                "ebda0d8f.76b61"
-            ]
-        ]
-    },
-    {
-        "id": "ebda0d8f.76b61",
-        "type": "function",
-        "z": "606fe2de.71638c",
-        "name": "properties",
-        "func": "msg = {\n    'topic': 'property',\n    'payload': { \n        'fanSpeed': {'value':120},\n        'voltage': {'value':5},\n        'current': {'value':55},\n        'irSwitch': {'value':true}\n    }\n}\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 660,
-        "y": 1600,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "47e45431.71bd4c",
-        "type": "function",
-        "z": "606fe2de.71638c",
-        "name": "command response",
-        "func": "if (msg.topic == \"command\") {\n   var responseMsg = {\n       \"topic\": \"response\",\n       \"payload\": {\n            \"requestId\": msg.payload.requestId,\n            \"methodName\": msg.payload.methodName,\n            \"status\": 200,\n            \"payload\": msg.payload.payload\n       }\n   };\n   return responseMsg;\n}\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 970,
-        "y": 1640,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ce8677f7.fc0b28",
-        "type": "function",
-        "z": "606fe2de.71638c",
-        "name": "",
-        "func": "msg = {\n    'topic': 'property',\n    'payload': { \n        'MachineData':{\n        'Typ': 'Hanomag 17',\n        'SerialNumber': '08154713'\n         }\n    }\n}\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1080,
-        "y": 1540,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a4aafe31.b2a19",
+        "id": "b13dc0d4.ae39f",
         "type": "debug",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -211,14 +104,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 930,
-        "y": 580,
+        "x": 850,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "870033da.d21e1",
+        "id": "bae1406d.d61a",
         "type": "template",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "Send reported properties",
         "field": "payload",
         "fieldType": "msg",
@@ -226,18 +119,19 @@
         "syntax": "mustache",
         "template": "{\n    \"reported.properties\": {\n        \"MachineData\":{\n        \"Typ\": \"Hanomag 17\",\n        \"SerialNumber\": \"08154715\"\n         },\n        \"ReportedLocation\":{\n        \"lat\":51.9980999,\n        \"lon\":8.5761898,\n        \"alt\":192\n         }\n        }\n    \n}",
         "output": "json",
-        "x": 510,
-        "y": 580,
+        "x": 430,
+        "y": 440,
         "wires": [
             [
-                "a4aafe31.b2a19"
+                "e133fa46.900198",
+                "b13dc0d4.ae39f"
             ]
         ]
     },
     {
-        "id": "507c34e8.5d55bc",
+        "id": "f14ded0.6c36c1",
         "type": "inject",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "Initial Properties",
         "props": [
             {
@@ -255,23 +149,23 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 260,
-        "y": 580,
+        "x": 180,
+        "y": 440,
         "wires": [
             [
-                "870033da.d21e1",
-                "c487a828.3301b8",
-                "40d50472.90ce0c",
-                "91759f4d.5c4cb",
-                "baabce36.cc239",
-                "a470951f.b932a8"
+                "bae1406d.d61a",
+                "c0a2ff2e.f8edd",
+                "aba16ab6.638638",
+                "ab3ae48b.cf9c58",
+                "646c198c.7dfd58",
+                "eb9597a9.bae1c8"
             ]
         ]
     },
     {
-        "id": "c487a828.3301b8",
+        "id": "c0a2ff2e.f8edd",
         "type": "function",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "TimeOfInitialCommissioning",
         "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction TimeOfInitialCommissioning (newValue)\n{\n    node.log(\"received desired prop from cloud:\" + newValue);\n    flow.set('TimeOfInitialCommissioning', newValue);\n}\n\nflow.set('TimeOfInitialCommissioning-handler',TimeOfInitialCommissioning);\n",
         "outputs": 1,
@@ -279,70 +173,70 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 620,
+        "x": 440,
+        "y": 480,
         "wires": [
             [
-                "a4aafe31.b2a19"
+                "b13dc0d4.ae39f"
             ]
         ]
     },
     {
-        "id": "e6c1ace4.8e332",
+        "id": "a45a8b2b.7fbca8",
         "type": "random",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "PowerConsumption",
         "low": "4.050",
         "high": "4.150",
         "inte": "false",
         "property": "PowerConsumption",
-        "x": 620,
-        "y": 140,
+        "x": 380,
+        "y": 100,
         "wires": [
             [
-                "4bc5e8d3.bc3428"
+                "ca85e946.5dd848"
             ]
         ]
     },
     {
-        "id": "4bc5e8d3.bc3428",
+        "id": "ca85e946.5dd848",
         "type": "random",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "Temperature",
         "low": "196",
         "high": "202",
         "inte": "false",
         "property": "Temperature",
-        "x": 590,
-        "y": 180,
+        "x": 370,
+        "y": 140,
         "wires": [
             [
-                "33f8013e.c42f2e"
+                "2328009c.cb835"
             ]
         ]
     },
     {
-        "id": "33f8013e.c42f2e",
+        "id": "2328009c.cb835",
         "type": "random",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "CycleTime",
         "low": "29",
         "high": "31",
         "inte": "false",
         "property": "CycleTime",
-        "x": 590,
-        "y": 220,
+        "x": 370,
+        "y": 180,
         "wires": [
             [
-                "76d06a6d.0174a4",
-                "f375b8e9.b33f7"
+                "bb6a5cc.40070a",
+                "b6e23919.3cf788"
             ]
         ]
     },
     {
-        "id": "40d50472.90ce0c",
+        "id": "aba16ab6.638638",
         "type": "function",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "WorkingModePayload",
         "func": "\nvar data;\n\nfunction OnDataCmd(request, response) {\n // node.warn (\"Received synchronous call to OnDataCmd\");\n // node.warn (\"Method name: \" + request.methodName );\n // node.warn (\"Value: \" + request.payload);\n // data = \"you said:\" + String(request.payload);\n \n  flow.set('WorkingModePayload',request.payload); //<- Value from WorkingMode Comand\n  \n  if (String(request.payload)==0)\n   data =\"Normal Mode on\"\n  else if (String(request.payload)==1)\n   data =\"Escalation Mode on\"\n  else\n   data =\"Escalation Mode off\"\n   \n  response.send(200, data , (err) => {\n    if (err) {\n      node.warn('Unable to send method response: ' + err.toString());\n    }\n    else {\n            //node.warn('Response to method \\'' + request.methodName + '\\' sent successfully... ' + data);\n        }\n  });\n}\n\nflow.set('WorkingMode',OnDataCmd);\n",
         "outputs": 1,
@@ -350,55 +244,55 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 500,
-        "y": 780,
+        "x": 420,
+        "y": 640,
         "wires": [
             [
-                "a4aafe31.b2a19"
+                "b13dc0d4.ae39f"
             ]
         ]
     },
     {
-        "id": "a81acf4.4e9ec3",
+        "id": "270eca5f.0f3c46",
         "type": "random",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "Gen. Temp offset",
         "low": "0.05",
         "high": "0.4",
         "inte": "false",
         "property": "temp_offset",
-        "x": 410,
-        "y": 300,
+        "x": 330,
+        "y": 260,
         "wires": [
             [
-                "c7e1131b.a35c5"
+                "36a3cbdd.d62f64"
             ]
         ]
     },
     {
-        "id": "c7e1131b.a35c5",
+        "id": "36a3cbdd.d62f64",
         "type": "random",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "Gen. Power offset",
         "low": "0.005",
         "high": "0.020",
         "inte": "false",
         "property": "power_offset",
-        "x": 410,
-        "y": 360,
+        "x": 330,
+        "y": 320,
         "wires": [
             [
-                "38b7efec.75b51",
-                "79e03f2.89633c"
+                "460f52c3.c636ac",
+                "f718e57a.c673e8"
             ]
         ]
     },
     {
-        "id": "38b7efec.75b51",
+        "id": "460f52c3.c636ac",
         "type": "debug",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -406,14 +300,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 610,
-        "y": 400,
+        "x": 530,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "79e03f2.89633c",
+        "id": "f718e57a.c673e8",
         "type": "function",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "",
         "func": "flow.set('temp_offset',msg.temp_offset);\nflow.set('power_offset',msg.power_offset);\nreturn msg;",
         "outputs": 1,
@@ -421,16 +315,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 360,
+        "x": 540,
+        "y": 320,
         "wires": [
             []
         ]
     },
     {
-        "id": "309d6620.388dba",
+        "id": "e1d2a3d6.b4ac3",
         "type": "debug",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -440,14 +334,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1130,
-        "y": 160,
+        "x": 790,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "91759f4d.5c4cb",
+        "id": "ab3ae48b.cf9c58",
         "type": "function",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "MaxTempForShutdown",
         "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction MaxTempForShutdown (newValue)\n{\n    node.log(\"received desired prop from cloud:\" + newValue);\n    flow.set('MaxTempForShutdown', newValue);\n}\n\nflow.set('MaxTempForShutdown-handler',MaxTempForShutdown);\n",
         "outputs": 1,
@@ -455,18 +349,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 510,
-        "y": 660,
+        "x": 430,
+        "y": 520,
         "wires": [
             [
-                "a4aafe31.b2a19"
+                "b13dc0d4.ae39f"
             ]
         ]
     },
     {
-        "id": "baabce36.cc239",
+        "id": "646c198c.7dfd58",
         "type": "function",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "TimeOfInitialCommissioning",
         "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction MaxPowerConsumptionForShutdown (newValue)\n{\n    node.log(\"received desired prop from cloud:\" + newValue);\n    flow.set('MaxPowerConsumptionForShutdown', newValue);\n}\n\nflow.set('MaxPowerConsumptionForShutdown-handler',MaxPowerConsumptionForShutdown);\n",
         "outputs": 1,
@@ -474,18 +368,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 700,
+        "x": 440,
+        "y": 560,
         "wires": [
             [
-                "a4aafe31.b2a19"
+                "b13dc0d4.ae39f"
             ]
         ]
     },
     {
-        "id": "a470951f.b932a8",
+        "id": "eb9597a9.bae1c8",
         "type": "function",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "WorkingModePayload2",
         "func": "\nvar data;\n\nfunction OnDataCmd(request, response) {\n // node.warn (\"Received synchronous call to OnDataCmd\");\n // node.warn (\"Method name: \" + request.methodName );\n // node.warn (\"Value: \" + request.payload);\n // data = \"you said:\" + String(request.payload);\n \n  flow.set('WorkingModePayload2',request.payload); //<- Value from WorkingMode2 Comand\n  \n  if (String(request.payload)== false)\n   data =\"Normal Mode on\"\n  else if (String(request.payload)== true)\n   data =\"Escalation Mode on\"\n  else\n   data =\"Escalation Mode off\"\n   \n  response.send(200, data , (err) => {\n    if (err) {\n      node.warn('Unable to send method response: ' + err.toString());\n    }\n    else {\n            //node.warn('Response to method \\'' + request.methodName + '\\' sent successfully... ' + data);\n        }\n  });\n}\n\nflow.set('WorkingMode2',OnDataCmd);\n",
         "outputs": 1,
@@ -493,20 +387,20 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 510,
-        "y": 840,
+        "x": 430,
+        "y": 700,
         "wires": [
             [
-                "a4aafe31.b2a19"
+                "b13dc0d4.ae39f"
             ]
         ]
     },
     {
-        "id": "f375b8e9.b33f7",
+        "id": "b6e23919.3cf788",
         "type": "debug",
-        "z": "606fe2de.71638c",
+        "z": "922c9cdb.45706",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -514,8 +408,25 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 930,
-        "y": 80,
+        "x": 630,
+        "y": 100,
         "wires": []
+    },
+    {
+        "id": "f220f19e.c6b54",
+        "type": "function",
+        "z": "922c9cdb.45706",
+        "name": "telemetry",
+        "func": "//Get time difference between desired property and actual time in hours difference\nconst start = new Date(flow.get(\"TimeOfInitialCommissioning\"));\nconst end = new Date().getTime();\nconst diff = end - start;\n//const seconds = Math.floor(diff / 1000 % 60);\nconst seconds = Math.floor(diff / 1000 /60);\nconst hours_diff = Math.round(seconds / 60);\n\n\n//if working mode = 1 \n//flow.set('temp_escalation',msg.Temperature);\n//flow.set('power_escalation',msg.PowerConsumption);\n//    node.warn (\"Data\")\n//    node.warn ('1. flow.get(\"temp_escalation\") ' + flow.get(\"temp_escalation\") +' ');\n//    node.warn ('2. flow.get(\"MaxTempForShutdown\") ' + flow.get(\"MaxTempForShutdown\") +' ');\n//    node.warn ('3. flow.get(\"power_escalation\") ' + flow.get(\"power_escalation\") +' ');\n//    node.warn ('4. flow.get(\"MaxPowerConsumptionForShutdown\") ' + flow.get(\"MaxPowerConsumptionForShutdown\") +' ');\n    \n    \nconst temp_escalation = flow.get(\"temp_escalation\");\nconst power_escalation = flow.get(\"power_escalation\");\nconst power_shutdown = flow.get(\"MaxPowerConsumptionForShutdown\");\nconst temp_shutdown = flow.get(\"MaxTempForShutdown\");\nconst Temperature = flow.get(\"Temperature\");\nconst PowerConsumption = flow.get(\"PowerConsumption\");\n\nif ((temp_escalation <= temp_shutdown)){\n//if (('flow.get(\"temp_escalation\")' < 'flow.get(\"MaxTempForShutdown\")')||('flow.get(\"power_escalation\")' < 'flow.get(\"MaxPowerConsumptionForShutdown\")')){\n    flow.get(\"WorkingModePayload\")\n    flow.set(\"WorkingModePayload\",0)\n//    node.warn (\"Shutdown reached\")\n//    node.warn ('1. flow.get(\"temp_escalation\") ' + flow.get(\"temp_escalation\") +' ');\n//    node.warn ('2. flow.get(\"MaxTempForShutdown\") ' + flow.get(\"MaxTempForShutdown\") +' ');\n//    node.warn ('3. flow.get(\"power_escalation\") ' + flow.get(\"power_escalation\") +' ');\n//    node.warn ('4. flow.get(\"MaxPowerConsumptionForShutdown\") ' + flow.get(\"MaxPowerConsumptionForShutdown\") +' ');\n//    node.warn ('5. flow.get(\"WorkingModePayload\") ' + flow.get(\"WorkingModePayload\") +' ');\n} \n\n\nif (flow.get(\"WorkingModePayload\") == 0){\nnode.warn(\"Sending Data - No Escalation\");\nflow.set('temp_escalation',msg.Temperature);\nflow.set('power_escalation',msg.PowerConsumption);\n//node.warn ('1. msg.Temperature ' + msg.Temperature +' ');\nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': msg.Temperature,\n        'PowerConsumption': msg.PowerConsumption,\n        'OperatingHours': hours_diff\n    }\n}\n//node.warn ('2. msg.Temperature ' + msg.Temperature +' ');\n//flow.set('temp_escalation',msg.Temperature);\n//flow.set('power_escalation',msg.PowerConsumption);\n\n} else {\n    node.warn(\"Sending Data - Escalation\");\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));   \nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': flow.get(\"temp_escalation\"),\n        'PowerConsumption': flow.get(\"power_escalation\"),\n        'OperatingHours': hours_diff\n    }\n}\n\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));\n\n\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 240,
+        "wires": [
+            []
+        ]
     }
 ]
