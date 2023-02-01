@@ -6,7 +6,7 @@ To use it just:
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMaPaSoTo%2Fnode-red-webapp%2Fmain%2Fwebapp.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
 
-Or... 
+<!-- Or... 
 
 1. Create an Azure Web App
 1. Open the settings and activate **Web sockets**
@@ -34,17 +34,17 @@ You can see the live log in the Azure Portal, in the *Log stream* tab:
 
 ![Application logs stream](./_images/logstream.png)
 
+
 **Figure 4** Application logs stream
+-->
 
 It comes with some cool nodes preinstalled:
 
 * Dashboard (create an awesome ui and see it in https://yoursite/ui )
-* Azure IoT Hub
-* Cognitive Services
-* Azure Storage (Blobs & Tables)
-* DocumentDB
-* Azure SQL
-* Swagger node
+* Azure IoT Central
+* Azure IoT Device
+* Random
+* Counter
 
 ## Securing your deployment
 
