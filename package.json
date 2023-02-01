@@ -5,11 +5,10 @@
   "main": "server.js",
   "dependencies": {
     "node-red": "^3.0.2",
-    "node-red-dashboard": "^3.2.0",
+    "node-red-dashboard": "latest",
     "node-red-contrib-azure-iot-central":"latest",
     "node-red-contrib-azure-iot-device":"latest",
     "node-red-node-random":"latest",
-    "node-red-node-rbe":"latest",
     "ttb-node-red-counter":"latest"
   },
   "devDependencies": {},
