@@ -5,9 +5,12 @@
   "main": "server.js",
   "dependencies": {
     "node-red": "^3.0.2",
-    "node-red-contrib-azureiotc2d": "0.0.9",
-    "node-red-contrib-azureiothubnode": "^0.5.3",
-    "node-red-dashboard": "^3.2.0"
+    "node-red-dashboard": "^3.2.0",
+    "node-red-contrib-azure-iot-central":"latest",
+    "node-red-contrib-azure-iot-device":"latest",
+    "node-red-node-random":"latest",
+    "node-red-node-rbe":"latest",
+    "ttb-node-red-counter":"latest"
   },
   "devDependencies": {},
   "scripts": {
