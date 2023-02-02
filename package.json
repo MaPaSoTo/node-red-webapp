@@ -18,17 +18,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/jmservera/node-red-azure-webapp.git"
+    "url": "git+ssh://git@github.com/MaPaSoTo/node-red-webapp.git"
   },
   "keywords": [
     "node-red",
     "Azure"
   ],
-  "author": "jmservera",
+  "author": "MaPaSoTo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jmservera/node-red-azure-webapp/issues"
+    "url": "https://github.com/MaPaSoTo/node-red-webapp/issues"
   },
-  "homepage": "https://github.com/jmservera/node-red-azure-webapp#readme",
+  "homepage": "https://github.com/MaPaSoTo/node-red-webapp#readme",
   "engines": {"node":">=12.15.0", "npm":">=6.13.4"}
 }
