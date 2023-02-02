@@ -48,7 +48,8 @@ It comes with some cool nodes preinstalled:
 
 ## Securing your deployment
 
-To secure this deployment and add an admin password edit the `settings.js` file.
+I use a ultra-highly complex password (a hint: it's not 1234545678) in this actual configuration
+<!-- To secure this deployment and add an admin password edit the `settings.js` file. -->
 
 ## Version History
 
