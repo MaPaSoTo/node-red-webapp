@@ -1,5 +1,5 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "siteName": {
@@ -105,6 +105,7 @@
       "properties": {
         "serverFarmId": "[variables('hostingPlanName')]",
         "siteConfig": {
+          "location": "[resourceGroup().location]",
           "webSocketsEnabled": true,
           "alwaysOn": "[variables('alwaysOnValue')[parameters('sku')]]",
           "phpVersion":""
@@ -115,6 +116,7 @@
           "apiVersion": "2015-08-01",
           "name": "web",
           "type": "sourcecontrols",
+          "location": "[resourceGroup().location]",
           "dependsOn": [
             "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
           ],
