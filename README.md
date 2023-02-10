@@ -71,4 +71,18 @@ I use a ultra-highly complex password (a hint: it's not 1234545678) in this actu
   * Update cognitive-services 0.5.5
   * Update dashboard 2.21.0
   * Update node-swagger 0.1.9
+* v3.0.0-beta
+   * Update to node-red 3.0.2
+   * Install node-red-dashboard: 3.2.0 (aktuell:3.3.1)
+   * Install node-red-contrib-azure-iot-central to 1.5.4 (latest)
+   * Install node-red-contrib-azure-iot-device: 0.2.6 (latest)
+   * Install node-red-node-random: 0.4.1 (latest)
+   * Install ttb-node-red-counter: 0.1.0 (latest)
+   * Removed azureiothubnode to 0.5.2
+   * Removed cognitive-services 0.5.5
+   * Removed dashboard 2.21.0
+   * Removed node-swagger 0.1.9
+* v3.0.1-beta 
+   * Add login protection
+   * Add injection moulding machine as pre-installed flow
   
