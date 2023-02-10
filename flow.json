@@ -1,38 +1,41 @@
 [
     {
+        "id": "22d6a2a7c9d5b85e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "cb08258f.0af9e8",
         "type": "inject",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "",
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
             }
         ],
-        "repeat": "45",
+        "repeat": "5",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 150,
+        "x": 90,
         "y": 100,
         "wires": [
             [
-                "a45a8b2b.7fbca8",
-                "270eca5f.0f3c46"
+                "28b73f445106841e"
             ]
         ]
     },
     {
         "id": "618bf86a.370678",
         "type": "debug",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -42,26 +45,25 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 810,
-        "y": 300,
+        "x": 1050,
+        "y": 360,
         "wires": []
     },
     {
         "id": "bb6a5cc.40070a",
         "type": "function",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "telemetry",
-        "func": "//Get time difference between desired property and actual time in hours difference\nconst start = new Date(flow.get(\"TimeOfInitialCommissioning\"));\nconst end = new Date().getTime();\nconst diff = end - start;\n//const seconds = Math.floor(diff / 1000 % 60);\nconst seconds = Math.floor(diff / 1000 /60);\nconst hours_diff = Math.round(seconds / 60);\nvar temp_escalation = flow.get(\"temp_escalation\");\nvar power_escalation = flow.get(\"power_escalation\");\nconst power_shutdown = flow.get(\"MaxPowerConsumptionForShutdown\");\nconst temp_shutdown = flow.get(\"MaxTempForShutdown\");\nvar Temperature = flow.get(\"Temperature\");\nvar PowerConsumption = flow.get(\"PowerConsumption\");\n\nif ((temp_escalation <= temp_shutdown)){\n\n    flow.get(\"WorkingModePayload\")\n    flow.set(\"WorkingModePayload\",0)\n} \n\n\nif (flow.get(\"WorkingModePayload\") == 0){\nnode.warn(\"Sending Data - No Escalation\");\nflow.set('temp_escalation',msg.Temperature);\nflow.set('power_escalation',msg.PowerConsumption);\nnode.warn ('1. msg.Temperature ' + msg.Temperature +' ');\nnode.warn ('1. msg.CycleTime ' + msg.CycleTime +' ');\nnode.warn ('1. msg.PowerConsumption ' + msg.PowerConsumption +' ');\nnode.warn ('1. msg.OperatingHours ' + hours_diff +' ');\nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': msg.Temperature,\n        'PowerConsumption': msg.PowerConsumption,\n        'OperatingHours': hours_diff\n    }\n}\n} else {\n    node.warn(\"Sending Data - Escalation\");\n    flow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\n    flow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));   \n    node.warn ('2. msg.Temperature (temp_escalation) ' + temp_escalation +' ');\n    node.warn ('2. msg.CycleTime ' + msg.CycleTime +' ');\n    node.warn ('2. msg.PowerConsumption ' + power_escalation +' ');\n    node.warn ('2. msg.OperatingHours ' + hours_diff +' ');\n    msg = {\n        'topic': 'telemetry',\n        'payload': {\n            'CycleTime': msg.CycleTime,\n            'Temperature': flow.get(\"temp_escalation\"),\n            'PowerConsumption': flow.get(\"power_escalation\"),\n            'OperatingHours': hours_diff\n        }\n}\n\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));\n\n\n}\n\n\nreturn msg;",
+        "func": "//Get time difference between desired property and actual time in hours difference\nconst start = new Date(flow.get(\"TimeOfInitialCommissioning\"));\nconst end = new Date().getTime();\n// @ts-ignore\nconst diff = end - start;\n//node.warn('1. start ' +start + ' ');\n//node.warn('1. end ' + end + ' ');\n//node.warn('1. diff ' + diff + ' ');\n//const seconds = Math.floor(diff / 1000 % 60);\nconst seconds = Math.floor(diff / 1000 /60);\nconst hours_diff = Math.round(seconds / 60);\nvar temp_escalation = flow.get(\"temp_escalation\");\nvar power_escalation = flow.get(\"power_escalation\");\nconst power_shutdown = flow.get(\"MaxPowerConsumptionForShutdown\");\nconst temp_shutdown = flow.get(\"MaxTempForShutdown\");\nvar Temperature = flow.get(\"Temperature\");\nvar PowerConsumption = flow.get(\"PowerConsumption\");\n\nif ((temp_escalation <= temp_shutdown)){\n\n    flow.get(\"WorkingModePayload\")\n    flow.set(\"WorkingModePayload\",0)\n} \n\n\nif (flow.get(\"WorkingModePayload\") == 0){\nnode.warn(\"Sending Data - No Escalation\");\nflow.set('temp_escalation',msg.Temperature);\nflow.set('power_escalation',msg.PowerConsumption);\n//node.warn ('1. msg.Temperature ' + msg.Temperature +' ');\n//node.warn ('1. msg.CycleTime ' + msg.CycleTime +' ');\n//node.warn ('1. msg.PowerConsumption ' + msg.PowerConsumption +' ');\n//node.warn ('1. msg.OperatingHours ' + hours_diff +' ');\nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': msg.Temperature,\n        'PowerConsumption': msg.PowerConsumption,\n        'OperatingHours': hours_diff\n    }\n}\n} else {\n    node.warn(\"Sending Data - Escalation\");\n    flow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\n    flow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));   \n    //node.warn ('2. msg.Temperature (temp_escalation) ' + temp_escalation +' ');\n    //node.warn ('2. msg.CycleTime ' + msg.CycleTime +' ');\n    //node.warn ('2. msg.PowerConsumption ' + power_escalation +' ');\n    //node.warn ('2. msg.OperatingHours ' + hours_diff +' ');\n    msg = {\n        'topic': 'telemetry',\n        'payload': {\n            'CycleTime': msg.CycleTime,\n            'Temperature': flow.get(\"temp_escalation\"),\n            'PowerConsumption': flow.get(\"power_escalation\"),\n            'OperatingHours': hours_diff\n        }\n}\n\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));\n\n\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
-        "y": 180,
+        "x": 860,
+        "y": 320,
         "wires": [
             [
-                "e1d2a3d6.b4ac3",
                 "e133fa46.900198"
             ]
         ]
@@ -69,10 +71,10 @@
     {
         "id": "e133fa46.900198",
         "type": "Azure IoT Central",
-        "z": "922c9cdb.45706",
-        "scopeid": "0ne002783A6",
-        "deviceid": "machine1",
-        "primarykey": "yoONN0Z6KWIVakKIJ9iOYjecyKxyJcYPj49hRWlFylA=",
+        "z": "22d6a2a7c9d5b85e",
+        "scopeid": "0ne006FA61D",
+        "deviceid": "IM-Machine_001",
+        "primarykey": "luBs1digapPv6Z1jeKop49DiK26PWPu7RvSkFYt4tLY=",
         "command1": "WorkingMode",
         "command2": "WorkingMode2",
         "command3": "",
@@ -83,8 +85,8 @@
         "certfile": "",
         "certkeyfile": "",
         "passwordi": "",
-        "x": 810,
-        "y": 240,
+        "x": 890,
+        "y": 360,
         "wires": [
             [
                 "618bf86a.370678"
@@ -94,7 +96,7 @@
     {
         "id": "b13dc0d4.ae39f",
         "type": "debug",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -104,20 +106,20 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 850,
+        "x": 1050,
         "y": 440,
         "wires": []
     },
     {
         "id": "bae1406d.d61a",
         "type": "template",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "Send reported properties",
         "field": "payload",
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "{\n    \"reported.properties\": {\n        \"MachineData\":{\n        \"Typ\": \"Hanomag 17\",\n        \"SerialNumber\": \"08154715\"\n         },\n        \"ReportedLocation\":{\n        \"lat\":51.9980999,\n        \"lon\":8.5761898,\n        \"alt\":192\n         }\n        }\n    \n}",
+        "template": "{\n    \"reported.properties\": {\n        \"MachineData\":{\n        \"Typ\": \"Krauss Maffei 350-1900 C2\",\n        \"SerialNumber\": \"1113-215089\"\n         },\n        \"ReportedLocation\":{\n        \"lat\":51.9980999,\n        \"lon\":8.5761898,\n        \"alt\":192\n         }\n        }\n    \n}",
         "output": "json",
         "x": 430,
         "y": 440,
@@ -131,7 +133,7 @@
     {
         "id": "f14ded0.6c36c1",
         "type": "inject",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "Initial Properties",
         "props": [
             {
@@ -158,16 +160,17 @@
                 "aba16ab6.638638",
                 "ab3ae48b.cf9c58",
                 "646c198c.7dfd58",
-                "eb9597a9.bae1c8"
+                "eb9597a9.bae1c8",
+                "e199d46cc835c99d"
             ]
         ]
     },
     {
         "id": "c0a2ff2e.f8edd",
         "type": "function",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "TimeOfInitialCommissioning",
-        "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction TimeOfInitialCommissioning (newValue)\n{\n    node.log(\"received desired prop from cloud:\" + newValue);\n    flow.set('TimeOfInitialCommissioning', newValue);\n}\n\nflow.set('TimeOfInitialCommissioning-handler',TimeOfInitialCommissioning);\n",
+        "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction TimeOfInitialCommissioning (newValue)\n{\n    node.warn(\"received desired prop from cloud:\" + newValue);\n    flow.set('TimeOfInitialCommissioning', newValue);\n}\n\nflow.set('TimeOfInitialCommissioning-handler',TimeOfInitialCommissioning);\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -184,14 +187,14 @@
     {
         "id": "a45a8b2b.7fbca8",
         "type": "random",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "PowerConsumption",
         "low": "4.050",
         "high": "4.150",
         "inte": "false",
         "property": "PowerConsumption",
-        "x": 380,
-        "y": 100,
+        "x": 680,
+        "y": 180,
         "wires": [
             [
                 "ca85e946.5dd848"
@@ -201,14 +204,14 @@
     {
         "id": "ca85e946.5dd848",
         "type": "random",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "Temperature",
         "low": "196",
         "high": "202",
         "inte": "false",
         "property": "Temperature",
-        "x": 370,
-        "y": 140,
+        "x": 710,
+        "y": 220,
         "wires": [
             [
                 "2328009c.cb835"
@@ -218,14 +221,14 @@
     {
         "id": "2328009c.cb835",
         "type": "random",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "CycleTime",
         "low": "29",
         "high": "31",
         "inte": "false",
         "property": "CycleTime",
-        "x": 370,
-        "y": 180,
+        "x": 710,
+        "y": 260,
         "wires": [
             [
                 "bb6a5cc.40070a",
@@ -236,16 +239,16 @@
     {
         "id": "aba16ab6.638638",
         "type": "function",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "WorkingModePayload",
-        "func": "\nvar data;\n\nfunction OnDataCmd(request, response) {\n // node.warn (\"Received synchronous call to OnDataCmd\");\n // node.warn (\"Method name: \" + request.methodName );\n // node.warn (\"Value: \" + request.payload);\n // data = \"you said:\" + String(request.payload);\n \n  flow.set('WorkingModePayload',request.payload); //<- Value from WorkingMode Comand\n  \n  if (String(request.payload)==0)\n   data =\"Normal Mode on\"\n  else if (String(request.payload)==1)\n   data =\"Escalation Mode on\"\n  else\n   data =\"Escalation Mode off\"\n   \n  response.send(200, data , (err) => {\n    if (err) {\n      node.warn('Unable to send method response: ' + err.toString());\n    }\n    else {\n            //node.warn('Response to method \\'' + request.methodName + '\\' sent successfully... ' + data);\n        }\n  });\n}\n\nflow.set('WorkingMode',OnDataCmd);\n",
+        "func": "\nvar data;\n\nfunction OnDataCmd(request, response) {\n // node.warn (\"Received synchronous call to OnDataCmd\");\n // node.warn (\"Method name: \" + request.methodName );\n // node.warn (\"Value: \" + request.payload);\n // data = \"you said:\" + String(request.payload);\n \n  flow.set('WorkingModePayload',request.payload); //<- Value from WorkingMode Comand\n  \n  if ((request.payload)==0)\n   data =\"Normal Mode on\"\n  else if ((request.payload)==1)\n   data =\"Escalation Mode on\"\n  else\n   data =\"Escalation Mode off\"\n   \n  response.send(200, data , (err) => {\n    if (err) {\n      node.warn('Unable to send method response: ' + err.toString());\n    }\n    else {\n            node.warn('Response to method \\'' + request.methodName + '\\' sent successfully... ' + data);\n        }\n  });\n}\n\nflow.set('WorkingMode',OnDataCmd);\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 420,
-        "y": 640,
+        "y": 660,
         "wires": [
             [
                 "b13dc0d4.ae39f"
@@ -255,7 +258,7 @@
     {
         "id": "270eca5f.0f3c46",
         "type": "random",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "Gen. Temp offset",
         "low": "0.05",
         "high": "0.4",
@@ -272,7 +275,7 @@
     {
         "id": "36a3cbdd.d62f64",
         "type": "random",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "Gen. Power offset",
         "low": "0.005",
         "high": "0.020",
@@ -282,32 +285,14 @@
         "y": 320,
         "wires": [
             [
-                "460f52c3.c636ac",
                 "f718e57a.c673e8"
             ]
         ]
     },
     {
-        "id": "460f52c3.c636ac",
-        "type": "debug",
-        "z": "922c9cdb.45706",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 530,
-        "y": 360,
-        "wires": []
-    },
-    {
         "id": "f718e57a.c673e8",
         "type": "function",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "",
         "func": "flow.set('temp_offset',msg.temp_offset);\nflow.set('power_offset',msg.power_offset);\nreturn msg;",
         "outputs": 1,
@@ -322,28 +307,11 @@
         ]
     },
     {
-        "id": "e1d2a3d6.b4ac3",
-        "type": "debug",
-        "z": "922c9cdb.45706",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 790,
-        "y": 140,
-        "wires": []
-    },
-    {
         "id": "ab3ae48b.cf9c58",
         "type": "function",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "MaxTempForShutdown",
-        "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction MaxTempForShutdown (newValue)\n{\n    node.log(\"received desired prop from cloud:\" + newValue);\n    flow.set('MaxTempForShutdown', newValue);\n}\n\nflow.set('MaxTempForShutdown-handler',MaxTempForShutdown);\n",
+        "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction MaxTempForShutdown (newValue)\n{\n    node.warn(\"received desired prop from cloud:\" + newValue);\n    flow.set('MaxTempForShutdown', newValue);\n}\n\nflow.set('MaxTempForShutdown-handler',MaxTempForShutdown);\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -360,15 +328,15 @@
     {
         "id": "646c198c.7dfd58",
         "type": "function",
-        "z": "922c9cdb.45706",
-        "name": "TimeOfInitialCommissioning",
-        "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction MaxPowerConsumptionForShutdown (newValue)\n{\n    node.log(\"received desired prop from cloud:\" + newValue);\n    flow.set('MaxPowerConsumptionForShutdown', newValue);\n}\n\nflow.set('MaxPowerConsumptionForShutdown-handler',MaxPowerConsumptionForShutdown);\n",
+        "z": "22d6a2a7c9d5b85e",
+        "name": "MaxPowerConsumptionForShutdown",
+        "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction MaxPowerConsumptionForShutdown (newValue)\n{\n    node.warn(\"received desired prop from cloud:\" + newValue);\n    flow.set('MaxPowerConsumptionForShutdown', newValue);\n}\n\nflow.set('MaxPowerConsumptionForShutdown-handler',MaxPowerConsumptionForShutdown);\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
+        "x": 470,
         "y": 560,
         "wires": [
             [
@@ -379,7 +347,7 @@
     {
         "id": "eb9597a9.bae1c8",
         "type": "function",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "WorkingModePayload2",
         "func": "\nvar data;\n\nfunction OnDataCmd(request, response) {\n // node.warn (\"Received synchronous call to OnDataCmd\");\n // node.warn (\"Method name: \" + request.methodName );\n // node.warn (\"Value: \" + request.payload);\n // data = \"you said:\" + String(request.payload);\n \n  flow.set('WorkingModePayload2',request.payload); //<- Value from WorkingMode2 Comand\n  \n  if (String(request.payload)== false)\n   data =\"Normal Mode on\"\n  else if (String(request.payload)== true)\n   data =\"Escalation Mode on\"\n  else\n   data =\"Escalation Mode off\"\n   \n  response.send(200, data , (err) => {\n    if (err) {\n      node.warn('Unable to send method response: ' + err.toString());\n    }\n    else {\n            //node.warn('Response to method \\'' + request.methodName + '\\' sent successfully... ' + data);\n        }\n  });\n}\n\nflow.set('WorkingMode2',OnDataCmd);\n",
         "outputs": 1,
@@ -398,7 +366,7 @@
     {
         "id": "b6e23919.3cf788",
         "type": "debug",
-        "z": "922c9cdb.45706",
+        "z": "22d6a2a7c9d5b85e",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -408,25 +376,92 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 630,
+        "x": 1050,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "90083d24cde1acde",
+        "type": "comment",
+        "z": "22d6a2a7c9d5b85e",
+        "name": "Instructions",
+        "info": "Pre-Installation\n 1. Create a new device in IOT Central and add credentials into the Azure IoT Central node\n 2. Use the device template (see. comment node \"Template\") in IoT Central ",
+        "x": 1010,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "af1c47d59cb99f0b",
+        "type": "comment",
+        "z": "22d6a2a7c9d5b85e",
+        "name": "Device Template for IoT Central",
+        "info": "[\n  {\n    \"@id\": \"dtmi:itService:Demo5l3;8\",\n    \"@type\": \"Interface\",\n    \"contents\": [\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:PowerConsumption;1\",\n        \"@type\": [\n          \"Telemetry\",\n          \"NumberValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Power Consumption\"\n        },\n        \"name\": \"PowerConsumption\",\n        \"schema\": \"float\"\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:Temperature;1\",\n        \"@type\": [\n          \"Telemetry\",\n          \"NumberValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Temperature\"\n        },\n        \"name\": \"Temperature\",\n        \"schema\": \"float\"\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:CycleTime;1\",\n        \"@type\": [\n          \"Telemetry\",\n          \"NumberValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Cycle Time\"\n        },\n        \"name\": \"CycleTime\",\n        \"schema\": \"float\"\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:MachineData;1\",\n        \"@type\": \"Property\",\n        \"displayName\": {\n          \"en\": \"Machine Data\"\n        },\n        \"name\": \"MachineData\",\n        \"schema\": {\n          \"@id\": \"dtmi:itService:Demo5l3:MachineData:schema;1\",\n          \"@type\": \"Object\",\n          \"displayName\": {\n            \"en\": \"Object\"\n          },\n          \"fields\": [\n            {\n              \"@id\": \"dtmi:itService:Demo5l3:MachineData:schema:Typ;1\",\n              \"displayName\": {\n                \"en\": \"Typ\"\n              },\n              \"name\": \"Typ\",\n              \"schema\": \"string\"\n            },\n            {\n              \"@id\": \"dtmi:itService:Demo5l3:MachineData:schema:SerialNumber;1\",\n              \"displayName\": {\n                \"en\": \"Serial Number\"\n              },\n              \"name\": \"SerialNumber\",\n              \"schema\": \"string\"\n            }\n          ]\n        },\n        \"writable\": false\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:TimeOfInitialCommissioning;2\",\n        \"@type\": [\n          \"Property\",\n          \"DateTimeValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Time of initial commissioning\"\n        },\n        \"name\": \"TimeOfInitialCommissioning\",\n        \"schema\": \"dateTime\",\n        \"writable\": true\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:OperatingHours;3\",\n        \"@type\": [\n          \"Telemetry\",\n          \"NumberValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Operating hours\"\n        },\n        \"name\": \"OperatingHours\",\n        \"schema\": \"integer\"\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:WorkingMode;4\",\n        \"@type\": \"Command\",\n        \"commandType\": \"synchronous\",\n        \"displayName\": {\n          \"en\": \"Working Mode\"\n        },\n        \"name\": \"WorkingMode\",\n        \"request\": {\n          \"@type\": \"CommandPayload\",\n          \"displayName\": {\n            \"en\": \"Request Name\"\n          },\n          \"name\": \"RequestName\",\n          \"schema\": \"integer\"\n        },\n        \"response\": {\n          \"@type\": \"CommandPayload\",\n          \"displayName\": {\n            \"en\": \"Response Name\"\n          },\n          \"name\": \"ResponseName\",\n          \"schema\": \"integer\"\n        }\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:MaxTempForShutdown;5\",\n        \"@type\": [\n          \"Property\",\n          \"NumberValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Max Temp for Shutdown\"\n        },\n        \"name\": \"MaxTempForShutdown\",\n        \"schema\": \"integer\",\n        \"writable\": true\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:MaxPowerConsumptionForShutdown;5\",\n        \"@type\": [\n          \"Property\",\n          \"NumberValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Max Power Consumption for Shutdown\"\n        },\n        \"name\": \"MaxPowerConsumptionForShutdown\",\n        \"schema\": \"integer\",\n        \"writable\": true\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:DataSendInterval;6\",\n        \"@type\": [\n          \"Property\",\n          \"NumberValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"Data Send Interval\"\n        },\n        \"name\": \"DataSendInterval\",\n        \"schema\": \"integer\",\n        \"writable\": true\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:Location;7\",\n        \"@type\": \"Property\",\n        \"displayName\": {\n          \"en\": \"Location\"\n        },\n        \"name\": \"Location\",\n        \"schema\": \"geopoint\",\n        \"writable\": true\n      },\n      {\n        \"@id\": \"dtmi:itService:Demo5l3:ReportedLocation;8\",\n        \"@type\": [\n          \"Property\",\n          \"Location\"\n        ],\n        \"displayName\": {\n          \"en\": \"Reported Location\"\n        },\n        \"name\": \"ReportedLocation\",\n        \"schema\": \"geopoint\",\n        \"writable\": false\n      },\n      {\n        \"@id\": \"dtmi:qrgvw8dxemg:fwoutan0nc:capabilityAlternateId\",\n        \"@type\": [\n          \"Property\",\n          \"Cloud\",\n          \"StringValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"capabilityAlternateId\"\n        },\n        \"name\": \"capabilityAlternateId\",\n        \"schema\": \"string\"\n      },\n      {\n        \"@id\": \"dtmi:qrgvw8dxemg:fwoutan0nc:sensorAlternateId\",\n        \"@type\": [\n          \"Property\",\n          \"Cloud\",\n          \"StringValue\"\n        ],\n        \"displayName\": {\n          \"en\": \"sensorAlternateId\"\n        },\n        \"name\": \"sensorAlternateId\",\n        \"schema\": \"string\"\n      }\n    ],\n    \"displayName\": {\n      \"en\": \"Demo\"\n    },\n    \"@context\": [\n      \"dtmi:iotcentral:context;2\",\n      \"dtmi:dtdl:context;2\"\n    ]\n  }\n]",
+        "x": 1070,
         "y": 100,
         "wires": []
     },
     {
-        "id": "f220f19e.c6b54",
+        "id": "70f4a4cd96438312",
+        "type": "delay",
+        "z": "22d6a2a7c9d5b85e",
+        "name": "waitSetDelay",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": true,
+        "outputs": 1,
+        "x": 410,
+        "y": 100,
+        "wires": [
+            [
+                "270eca5f.0f3c46",
+                "a45a8b2b.7fbca8"
+            ]
+        ]
+    },
+    {
+        "id": "e199d46cc835c99d",
         "type": "function",
-        "z": "922c9cdb.45706",
-        "name": "telemetry",
-        "func": "//Get time difference between desired property and actual time in hours difference\nconst start = new Date(flow.get(\"TimeOfInitialCommissioning\"));\nconst end = new Date().getTime();\nconst diff = end - start;\n//const seconds = Math.floor(diff / 1000 % 60);\nconst seconds = Math.floor(diff / 1000 /60);\nconst hours_diff = Math.round(seconds / 60);\n\n\n//if working mode = 1 \n//flow.set('temp_escalation',msg.Temperature);\n//flow.set('power_escalation',msg.PowerConsumption);\n//    node.warn (\"Data\")\n//    node.warn ('1. flow.get(\"temp_escalation\") ' + flow.get(\"temp_escalation\") +' ');\n//    node.warn ('2. flow.get(\"MaxTempForShutdown\") ' + flow.get(\"MaxTempForShutdown\") +' ');\n//    node.warn ('3. flow.get(\"power_escalation\") ' + flow.get(\"power_escalation\") +' ');\n//    node.warn ('4. flow.get(\"MaxPowerConsumptionForShutdown\") ' + flow.get(\"MaxPowerConsumptionForShutdown\") +' ');\n    \n    \nconst temp_escalation = flow.get(\"temp_escalation\");\nconst power_escalation = flow.get(\"power_escalation\");\nconst power_shutdown = flow.get(\"MaxPowerConsumptionForShutdown\");\nconst temp_shutdown = flow.get(\"MaxTempForShutdown\");\nconst Temperature = flow.get(\"Temperature\");\nconst PowerConsumption = flow.get(\"PowerConsumption\");\n\nif ((temp_escalation <= temp_shutdown)){\n//if (('flow.get(\"temp_escalation\")' < 'flow.get(\"MaxTempForShutdown\")')||('flow.get(\"power_escalation\")' < 'flow.get(\"MaxPowerConsumptionForShutdown\")')){\n    flow.get(\"WorkingModePayload\")\n    flow.set(\"WorkingModePayload\",0)\n//    node.warn (\"Shutdown reached\")\n//    node.warn ('1. flow.get(\"temp_escalation\") ' + flow.get(\"temp_escalation\") +' ');\n//    node.warn ('2. flow.get(\"MaxTempForShutdown\") ' + flow.get(\"MaxTempForShutdown\") +' ');\n//    node.warn ('3. flow.get(\"power_escalation\") ' + flow.get(\"power_escalation\") +' ');\n//    node.warn ('4. flow.get(\"MaxPowerConsumptionForShutdown\") ' + flow.get(\"MaxPowerConsumptionForShutdown\") +' ');\n//    node.warn ('5. flow.get(\"WorkingModePayload\") ' + flow.get(\"WorkingModePayload\") +' ');\n} \n\n\nif (flow.get(\"WorkingModePayload\") == 0){\nnode.warn(\"Sending Data - No Escalation\");\nflow.set('temp_escalation',msg.Temperature);\nflow.set('power_escalation',msg.PowerConsumption);\n//node.warn ('1. msg.Temperature ' + msg.Temperature +' ');\nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': msg.Temperature,\n        'PowerConsumption': msg.PowerConsumption,\n        'OperatingHours': hours_diff\n    }\n}\n//node.warn ('2. msg.Temperature ' + msg.Temperature +' ');\n//flow.set('temp_escalation',msg.Temperature);\n//flow.set('power_escalation',msg.PowerConsumption);\n\n} else {\n    node.warn(\"Sending Data - Escalation\");\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));   \nmsg = {\n    'topic': 'telemetry',\n    'payload': {\n        'CycleTime': msg.CycleTime,\n        'Temperature': flow.get(\"temp_escalation\"),\n        'PowerConsumption': flow.get(\"power_escalation\"),\n        'OperatingHours': hours_diff\n    }\n}\n\nflow.set('temp_escalation',flow.get(\"temp_escalation\") - flow.get(\"temp_offset\"));\nflow.set('power_escalation',flow.get(\"power_escalation\") + flow.get(\"power_offset\"));\n\n\n}\n\n\nreturn msg;",
+        "z": "22d6a2a7c9d5b85e",
+        "name": "DataSendInterval",
+        "func": "// This is a property set in IoT Central.\n// It's a desired property for the device twin.\nfunction DataSendInterval (newValue)\n{\n    node.warn(\"received desired prop from cloud:\" + newValue);\n    flow.set('DataSendInterval', newValue);\n}\nflow.set('delay', DataSendInterval);\nflow.set('DataSendInterval-handler', DataSendInterval);",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
-        "y": 240,
+        "x": 410,
+        "y": 600,
         "wires": [
-            []
+            [
+                "b13dc0d4.ae39f"
+            ]
+        ]
+    },
+    {
+        "id": "28b73f445106841e",
+        "type": "function",
+        "z": "22d6a2a7c9d5b85e",
+        "name": "SetDelay",
+        "func": "msg.rate = flow.get('DataSendInterval');\nmsg.rate = msg.rate * 1000 //need sec not millis\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 100,
+        "wires": [
+            [
+                "70f4a4cd96438312"
+            ]
         ]
     }
 ]
