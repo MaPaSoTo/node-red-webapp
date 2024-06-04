@@ -82,6 +82,6 @@ I use a ultra-highly complex password (a hint: it's not 1234545678) in this actu
    * Removed dashboard 2.21.0
    * Removed node-swagger 0.1.9
 * v3.0.1-beta 
-   * Add login protection
+   * Add login protection ("Nij6kk!#")
    * Add injection moulding machine as pre-installed flow
   
