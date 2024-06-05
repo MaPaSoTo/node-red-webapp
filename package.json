@@ -9,7 +9,11 @@
     "node-red-contrib-azure-iot-central":"latest",
     "node-red-contrib-azure-iot-device":"latest",
     "node-red-node-random":"latest",
-    "ttb-node-red-counter":"latest"
+    "ttb-node-red-counter":"latest",
+    "node-red-contrib-aedes":"latest",
+    "node-red-contrib-loop":"latest",
+    "node-red-contrib-opcua":"latest",
+    "node-red-contrib-opcua-server":latest"
   },
   "devDependencies": {},
   "scripts": {
