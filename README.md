@@ -84,4 +84,9 @@ I use a ultra-highly complex password (a hint: it's not 1234545678) in this actu
 * v3.0.1-beta 
    * Add login protection ("Nij6kk!#")
    * Add injection moulding machine as pre-installed flow
+* v3.0.2-beta
+   * Added node-red-contrib-aedes (latest)
+   * Added node-red-contrib-loop (latest)
+   * Added node-red-contrib-opcua (latest)
+   * Added node-red-contrib-opcua-server (latest)  
   
