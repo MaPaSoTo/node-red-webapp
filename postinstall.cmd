@@ -4,7 +4,7 @@
 copy npm_.cmd \home\nodered\.node-red\npm_.cmd
 copy flow.json \home\nodered\.node-red\flow.json
 pushd \home\nodered\.node-red
-npm install node-red-dashboard node-red-contrib-azure-iot-central node-red-contrib-azure-iot-device node-red-node-random ttb-node-red-counter node-red-contrib-aedes node-red-contrib-loop node-red-contrib-opcua node-red-contrib-opcua-server & (
+npm install node-red-dashboard node-red-contrib-azure-iot-central node-red-contrib-azure-iot-device node-red-node-random ttb-node-red-counter node-red-contrib-aedes node-red-contrib-loop node-red-contrib-opcua & (
      copy npm_.cmd npm.cmd /y
      copy flow.json flows.json /y
      popd 
