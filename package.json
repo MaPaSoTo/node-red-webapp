@@ -25,5 +25,5 @@
     "url": "https://github.com/MaPaSoTo/node-red-webapp/issues"
   },
   "homepage": "https://github.com/MaPaSoTo/node-red-webapp#readme",
-  "engines": {"node":">=16.0.0", "npm":">=8.0.0"}
+  "engines": {"node":">=20.0.0", "npm":">=8.0.0"}
 }
