@@ -88,5 +88,5 @@ I use a ultra-highly complex password (a hint: it's not 1234545678) in this actu
    * Added node-red-contrib-aedes (latest)
    * Added node-red-contrib-loop (latest)
    * Added node-red-contrib-opcua (latest)
-   * Added node-red-contrib-opcua-server (latest)  
+ 
   
