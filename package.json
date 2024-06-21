@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/mauromezze/node-red-azure-webapp.git"
+    "url": "git+ssh://git@github.com/MaPaSoTo/node-red-webapp.git"
   },
   "keywords": [
     "node-red",
     "Azure"
   ],
-  "author": "mauromezze",
+  "author": "MaPaSoTo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MaPaSoTo/node-red-webapp/issues"
