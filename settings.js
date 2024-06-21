@@ -192,7 +192,9 @@ module.exports = {
     },
     editorTheme: {
         palette: {
-        enabled: true
+        enabled: true,
+        allowInstall: true,
+        allowUpload: true
         },
         projects:{
         enabled: true
