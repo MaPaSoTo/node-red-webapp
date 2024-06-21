@@ -192,7 +192,7 @@ module.exports = {
     },
     editorTheme: {
         palette: {
-        editable: true
+        enabled: true
         },
         projects:{
         enabled: true
