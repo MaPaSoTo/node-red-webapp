@@ -40,7 +40,7 @@ module.exports = {
 
     // To enabled pretty-printing of the flow within the flow file, set the following
     //  property to true:
-    flowFilePretty: true,
+    //flowFilePretty: true,
 
     // By default, credentials are encrypted in storage using a generated key. To
     // specify your own secret, set the following property.
@@ -191,8 +191,18 @@ module.exports = {
         }
     },
     editorTheme: {
-        projects:{
+      projects:{
         enabled: true
-       }
-    }
+      }
+    },
+    swagger: {
+        "template": {
+          "swagger": "2.0",
+          "info": {
+            "title": "Node-RED in Azure API",
+            "version": "0.0.1"
+          }
+        }
+      }
+
 };
