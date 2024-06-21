@@ -50,7 +50,7 @@
     },
     "branch": {
       "type": "string",
-      "defaultValue": "main",
+      "defaultValue": "clean4.0",
       "metadata": {
         "description": "The branch of the GitHub repository to use."
       }
@@ -108,7 +108,13 @@
           "location": "[resourceGroup().location]",
           "webSocketsEnabled": true,
           "alwaysOn": "[variables('alwaysOnValue')[parameters('sku')]]",
-          "phpVersion":""
+          "phpVersion":"",
+          "appSettings": [
+            {
+                "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                "value": "~18"
+            }
+          ]
         }
       },
       "resources": [
