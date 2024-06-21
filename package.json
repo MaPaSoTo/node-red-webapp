@@ -8,7 +8,7 @@
     "node-red-dashboard": "latest",
     "node-red-contrib-azure-iot-central":"^1.5.4",
     "node-red-contrib-azure-iot-device":"^0.2.6",
-    "node-red-node-random":"^3.6.5",
+    "node-red-node-random":"^0.4.1",
     "ttb-node-red-counter":"^0.1.0",
     "node-red-contrib-aedes":"^0.13.0",
     "node-red-contrib-loop":"^1.0.1",
