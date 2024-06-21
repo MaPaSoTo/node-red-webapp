@@ -50,7 +50,7 @@
     },
     "branch": {
       "type": "string",
-      "defaultValue": "main",
+      "defaultValue": "clean4.0",
       "metadata": {
         "description": "The branch of the GitHub repository to use."
       }
