@@ -4,8 +4,7 @@
   "description": "A webapp wrapper for running node-red in an Azure Web App",
   "main": "server.js",
   "dependencies": {
-    "node-red": "^4.0.0",
-    "node-red-dashboard": "^3.6.5"
+    "node-red": "^3.0.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -26,5 +25,5 @@
     "url": "https://github.com/MaPaSoTo/node-red-webapp/issues"
   },
   "homepage": "https://github.com/MaPaSoTo/node-red-webapp#readme",
-  "engines": {"node":">=16.16.0", "npm":">=8.9.0"}
+  "engines": {"node":">=16.0.0", "npm":">=8.0.0"}
 }
