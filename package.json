@@ -12,8 +12,7 @@
     "ttb-node-red-counter":"^0.1.0",
     "node-red-contrib-aedes":"^0.13.0",
     "node-red-contrib-loop":"^1.0.1",
-    "node-red-contrib-opcua":"^0.2.329",
-    "node-red-contrib-opcua-server":"^1.1.1"
+    "node-red-contrib-opcua":"^0.2.329"
   },
   "devDependencies": {},
   "scripts": {
