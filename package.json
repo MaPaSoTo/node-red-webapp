@@ -4,10 +4,10 @@
   "description": "A webapp wrapper for running node-red in an Azure Web App",
   "main": "server.js",
   "dependencies": {
-    "node-red": "latest",
+    "node-red": "^3.0.1",
     "node-red-dashboard": "latest",
-    "node-red-contrib-azure-iot-central":"latest",
-    "node-red-contrib-azure-iot-device":"latest",
+    "node-red-contrib-azure-iot-central":"~1.6.0",
+    "node-red-contrib-azure-iot-device":"^1.18.0",
     "node-red-node-random":"latest",
     "ttb-node-red-counter":"latest",
     "node-red-contrib-aedes":"latest",
