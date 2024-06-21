@@ -22,8 +22,8 @@
   "author": "mauromezze",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mauromezze/node-red-azure-webapp/issues"
+    "url": "https://github.com/MaPaSoTo/node-red-webapp/issues"
   },
-  "homepage": "https://github.com/mauromezze/node-red-azure-webapp#readme",
+  "homepage": "https://github.com/MaPaSoTo/node-red-webapp#readme",
   "engines": {"node":">=16.0.0", "npm":">=8.0.0"}
 }
