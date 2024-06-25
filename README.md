@@ -28,7 +28,7 @@ in the `settings.js` file.
 
 ## How to deploy with custom modules and flow
 
-Will be describt somehow in the future.
+There is a sample flow `flow.js` and the needed modifications with some flows in `example_postinstall.cmd`and `example_postinstall.sh`. Rename `example_postinstall.cmd` in `postinstall.cmd` and `example_postinstall.sh` to `postinstall.sh` should do the trick. The `flow.js` can also be replaced with your `flow.js` (of cause take care to reference the needed modules in both postinstall files).
 
 ## Version History
 
