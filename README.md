@@ -54,7 +54,7 @@ I use a ultra-highly complex password (a hint: it's not 1234545678) in this actu
 
 * v0.0.1
   * First test with basic nodes
-* v0.0.2
+<!-- * v0.0.2
   * Deploy to Azure Button
   * Add cognitive services
 * v0.0.3
@@ -88,5 +88,8 @@ I use a ultra-highly complex password (a hint: it's not 1234545678) in this actu
    * Added node-red-contrib-aedes (latest)
    * Added node-red-contrib-loop (latest)
    * Added node-red-contrib-opcua (latest)
- 
+ -->
+
+* v 1.0.0
+   * Update node-red, npm ans nodejs to actual version
   
